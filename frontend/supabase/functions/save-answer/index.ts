@@ -104,11 +104,8 @@ Deno.serve(async (req) => {
 
     if (updateError) throw updateError;
 
-    return response({
-      saved: true,
-      is_correct: isCorrect,
-      score,
-    });
+    // Ne jamais révéler la correction ou le score pendant le quiz.
+    return response({ saved: true });
 
   } catch (error) {
     return handleError(error);

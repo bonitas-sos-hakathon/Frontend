@@ -134,14 +134,6 @@ export async function getChild(req: Request) {
 
   if (!token) throw new Error("UNAUTHORIZED");
 
-  const { data: sessions, error } = await supabase
-    .from("child_sessions")
-    .select("id, child_id, expires_at, revoked_at")
-    .is("revoked_at", null)
-    .gt("expires_at", new Date().toISOString());
-
-  if (error) throw new Error("SESSION_ERROR");
-
   // Comparer le hash du token, jamais le token brut.
   const tokenHash = await crypto.subtle.digest(
     "SHA-256",
